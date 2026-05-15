@@ -43,27 +43,21 @@ export const generateAiResponse = async (userMessage: string) => {
 
     const systemPrompt = buildContextMessage();
 
-    return await client.responses.create({
+    const completion = await client.chat.completions.create({
         model: "openai/gpt-oss-120b",
-        input: [
+        messages: [
             {
                 role: "system",
-                content: [
-                    {
-                        type: "input_text",
-                        text: `${systemPrompt} `
-                    }
-                ]
+                content: systemPrompt
             },
             {
                 role: "user",
-                content: [
-                    {
-                        type: "input_text",
-                        text: userMessage
-                    }
-                ]
+                content: userMessage
             }
         ]
     });
+
+    return {
+        output_text: completion.choices[0]?.message?.content ?? ""
+    };
 };
