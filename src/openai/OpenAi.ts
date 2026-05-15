@@ -4,10 +4,23 @@ import { buildContextMessage } from "./context/Context.js";
 
 dotenv.config();
 
-const client = new OpenAI({
-    apiKey: process.env.AI_APIKEY,
-    baseURL: "https://api.groq.com/openai/v1",
-});
+let client: OpenAI | null = null;
+
+const getClient = (): OpenAI => {
+    if (client) return client;
+
+    const apiKey = process.env.AI_APIKEY;
+    if (!apiKey) {
+        throw new Error("AI_APIKEY belum diset di environment.");
+    }
+
+    client = new OpenAI({
+        apiKey,
+        baseURL: "https://api.groq.com/openai/v1",
+    });
+
+    return client;
+};
 
 const allowedKeywords = [
     "porto",
@@ -43,7 +56,7 @@ export const generateAiResponse = async (userMessage: string) => {
 
     const systemPrompt = buildContextMessage();
 
-    const completion = await client.chat.completions.create({
+    const completion = await getClient().chat.completions.create({
         model: "openai/gpt-oss-120b",
         messages: [
             {
