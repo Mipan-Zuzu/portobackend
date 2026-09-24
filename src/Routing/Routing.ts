@@ -8,8 +8,8 @@ import {
 
 const router:ExpressRouter  = Router()
 
-router.get("/api/data", async (req: Request, res: Response): Promise<void> => handleResponse(req, res))
-router.post("/api/data", async (req: Request, res: Response): Promise<void> => handleRequest(req, res))
+router.get("/v1/gpt", async (req: Request, res: Response): Promise<void> => handleResponse(req, res))
+router.post("/v1/gpt", async (req: Request, res: Response): Promise<void> => handleRequest(req, res))
 router.get("/ping", (req: Request, res:Response) => {
     try {
         res.status(200).json({
