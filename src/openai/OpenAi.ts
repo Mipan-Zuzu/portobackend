@@ -84,7 +84,6 @@ const allowedKeywords = [
 
 /**
  * Sapaan dasar.
- * Sapaan tidak perlu dianggap sebagai pertanyaan di luar portfolio.
  */
 const greetingPatterns = [
     "halo",
@@ -175,26 +174,6 @@ export const generateAiResponse = async (
         top_p: 1,
 
         /**
-         * Browser Search bawaan Groq.
-         *
-         * Model akan memilih sendiri kapan search diperlukan.
-         * Tidak perlu membuat function/tool handler manual.
-         */
-        tools: [
-            {
-                type: "browser_search",
-            } as any,
-        ],
-
-        /**
-         * Browser search TIDAK dipaksa.
-         *
-         * Model bisa menjawab langsung dari context portfolio
-         * dan menggunakan search ketika memang diperlukan.
-         */
-        tool_choice: "auto" as any,
-
-        /**
          * GPT-OSS reasoning.
          */
         reasoning_effort: "low" as any,
@@ -204,12 +183,6 @@ export const generateAiResponse = async (
          * akan memberikan efek typing sendiri.
          */
         stream: false,
-
-        /**
-         * Jika browser search digunakan, Groq dapat menyertakan
-         * citation pada output.
-         */
-        citation_options: "enabled" as any,
     });
 
     return {
