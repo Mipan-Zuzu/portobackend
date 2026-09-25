@@ -197,7 +197,7 @@ export const generateAiResponse = async (
         /**
          * GPT-OSS reasoning.
          */
-        reasoning_effort: "medium" as any,
+        reasoning_effort: "low" as any,
 
         /**
          * Tidak memakai stream di backend karena frontend
